@@ -1,0 +1,155 @@
+git init
+vai criar a .git oculta
+
+git remote add origin https://github.com/gui-far/versionamento01.git
+vai vincular a pasta atual (o .git oculto atual) com a url do repositorio
+
+git status
+vai retornar "On branch master"
+
+git branch -M main
+por padrao o nome da branch principal do github é "master"
+porem por algum motivo a comunidade acha melhor alterar para "main"
+
+git status
+vai retornar "On branch main"
+
+*crair os arquivos na pasta*
+
+git add .
+vai "preparar" (stage) o arquivo para serem commitados
+
+git status
+vai mostrar "Changes to be committed:" e os arquivos
+
+git commit -m "arquivo.js foi criado"
+vai "commitar" o arquivo com essa mensagem
+
+git status
+não vai mostrar mais nada pois nao a nada "novo" para ser comitado
+
+git log
+vai exibir o historico dos commits
+
+*alterar o conteudo para banana*
+
+git add .
+vai preparar o novo arquivo para ser comitado
+
+git commit -m "alterado para banana"
+vai comitar com essa mensagem
+
+git revert "sha1"
+vai tentar reverter o para o estado anterior
+
+git revert --abort
+vai "cancelar" o revert
+*Nesse caso ao tentar fazer o revert do primeiro sha1, o arquivo nem existia*
+*O resutlado seria a exclusão do arquivo*
+*O revert --abort nao fica registrado no git log*
+
+git revert "sha1"
+Vai permitir reverter o conteudo
+No prompt vai aparecer:
+Revert "mensagem original do commit"
+Para editar essa mensagme precisa apertar "i" para entrar no "insert mode".
+Dessa maneira é possivel alterar o texto.
+Uma vez alterado basta aperta ESC, isso vai fazer sair do "insert mode".
+Para salvar e sair precisa digitar:
+:wq
+Isso significa "write quit"
+O resultado vai ser que o conteudo do arquivo vai deixar de ser "banana" e retornar a ser "apple".
+Esse revert vai ficar salvo no log
+
+git log --reverse
+Vai exibir de cima para baixo o log dos commits
+Nessa altura devem ter 3 commits
+"arquivo.js foi criado"
+"alterado para banana"
+"Revert 'alterado para banana'"
+
+git push origin HEAD
+vai enviar o conteudo para o repositorio remoto (definido no inicio)
+o HEAD significa que será enviado para a branch remota com o mesmo nome da branch local
+Exemplo:
+se localmente voce esta na master
+git push origin HEAD será enviado para master remota
+origin diz respeito ao repositorio
+head diz respeito ao "nome" da branch atual
+isso evita enviar conteudo errado para branchs diferentes das quais voce possui localmente
+
+git branch ajuste01
+vai criar o branch01
+nesse momento no remote só existe a branch main
+
+git checkout ajuste01
+vai trocar para o branch local ajuste01
+
+* alterar o conteudo para abacaxi *
+
+git status
+vai exibir o arquivo modificados
+
+git add .
+vai preparar o para o commit
+
+git commit -m "alterado para abacaxi"
+vai commitar
+
+git log
+vai exibir o log sendo que o 4o log é do branch "ajuste01"
+
+git checkout main
+vai trocar para a branch main local
+aqui o conteudo é appl
+
+git checkout ajuste01
+vai trocar para a branch ajuste01 local
+
+git push origin HEAD
+vai criar a branch com mesmo nome da local no remote 
+origin faz referencia ao repositorio
+HEAD faz referencia ao "nome" da branch atual
+
+*agora temos dois branchs locais e dois remotos*
+
+git checkout main
+vamos para a branch main que contem apple
+
+git merge ajuste01
+o conteudo do ajuste01 vai vir para o main
+
+git branch -d ajuste01
+vai apagar o branch ajuste01 que já foi usado
+porem ele ainda vai exisitir no remote
+
+git push -d origin ajuste01
+vai apagar o branch no remote
+origin é o repositorio
+ajuste01 é o nome da branch
+
+git branch ajuste02
+git checkout ajuste02
+*alterar arquivo apara abacaxi*
+git add .
+git commit -m "ajuste02 com abacaxi"
+
+nesse cenário é possivel usar o gitlens e fazer um "SEARCH & COMPARE"
+Assim é possivel usar o VSCODE para comparar código entre uma branch e outra
+
+git checkout main
+git merge ajuste02
+*O conteudo do ajuste02 vai vir para o main*
+
+git reset --hard c6bd5a3a2b7c4047fb8f48c4666dbf8bb506461a 
+vai estornar  o merge acima onde o "c6bd5..." é o sha1 do git log antes do reset
+
+se olharmos no git log, o log do merge vai ter sumido
+
+mas se olharmos no reflog, vamos ver que o log do merge está lá,
+Sendo assim é possivel estornar o estorno fazendo:
+git reset --hard 01858ec 
+Onde 08158ec é o sha1 do reflog
+
+
+
