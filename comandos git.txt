@@ -151,5 +151,4 @@ Sendo assim é possivel estornar o estorno fazendo:
 git reset --hard 01858ec 
 Onde 08158ec é o sha1 do reflog
 
-
-
+***GIT PULL REQ***
